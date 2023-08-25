@@ -1,5 +1,47 @@
 # counterfact
 
+## 0.25.2
+
+### Patch Changes
+
+- 5523d0f: fixed another bug caused by backslashes in Windows
+
+## 0.25.1
+
+### Patch Changes
+
+- 226ce37: fixed a couple more issues in Windows
+
+## 0.25.0
+
+### Minor Changes
+
+- 5a9f40a: added a bunch more debug logging
+- fix Windows issue where "http://" gets changed to "http:/" and as a result the app hangs
+
+## 0.24.0
+
+### Minor Changes
+
+- e1bbb42: added a bit of debug logging (use environment variable DEBUG=counterfact to see it)
+- 1ea478a: remove the dependency on ts-node -- path files are now compiled with Typescript and output to a paths-js directory
+
+## 0.23.0
+
+### Minor Changes
+
+- 8ef5f41: Windows support! (maybe -- I don't have a Windows machine so I can't test directly)
+
+## 0.22.0
+
+### Minor Changes
+
+- 4dcfa06: add CORS headers to support local development (Thanks, [dethell-jh](https://github.com/dethell-jh)!)
+
+### Patch Changes
+
+- dec64f4: Add CORS headers
+
 ## 0.21.3
 
 ### Patch Changes

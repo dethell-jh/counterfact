@@ -104,7 +104,7 @@ describe("integration test", () => {
       res.end("I am proxy!\n");
     });
 
-    proxyTarget.listen(8121);
+    proxyTarget.listen(0);
 
     const app = new Koa();
     const request = supertest(app.callback());
@@ -133,6 +133,11 @@ describe("integration test", () => {
       expect(getResponse.text).toBe("I am proxy!\n");
 
       await moduleLoader.stopWatching();
+    });
+
+    // eslint-disable-next-line promise/avoid-new
+    await new Promise((resolve) => {
+      proxyTarget.close(resolve);
     });
   });
 });

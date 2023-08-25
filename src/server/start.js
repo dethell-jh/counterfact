@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
-import nodePath from "node:path";
-import { pathToFileURL } from "node:url";
+import nodePath, { dirname } from "node:path";
+import { pathToFileURL, fileURLToPath } from "node:url";
 
 import yaml from "js-yaml";
 import Koa from "koa";
@@ -13,7 +13,7 @@ import { readFile } from "../util/read-file.js";
 import { counterfact } from "./counterfact.js";
 
 // eslint-disable-next-line no-underscore-dangle
-const __dirname = nodePath.dirname(new URL(import.meta.url).pathname);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const DEFAULT_PORT = 3100;
 
@@ -51,7 +51,9 @@ function page(pathname, templateName, locals) {
   return async (ctx, next) => {
     const render = Handlebars.compile(
       await readFile(
-        nodePath.join(__dirname, `../client/${templateName}.html.hbs`)
+        nodePath
+          .join(__dirname, `../client/${templateName}.html.hbs`)
+          .replaceAll("\\", "/")
       )
     );
 
@@ -70,7 +72,9 @@ function page(pathname, templateName, locals) {
 export async function start(config) {
   const {
     basePath = process.cwd(),
-    openApiPath = nodePath.join(basePath, "../openapi.yaml"),
+    openApiPath = nodePath
+      .join(basePath, "../openapi.yaml")
+      .replaceAll("\\", "/"),
     port = DEFAULT_PORT,
   } = config;
 
