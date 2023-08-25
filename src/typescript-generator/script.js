@@ -149,16 +149,16 @@ export class Script {
   }
 
   importStatements() {
-    return Array.from(
-      this.imports,
-      ([name, { script, isType, isDefault }]) =>
-        `import${isType ? " type" : ""} ${
-          isDefault ? name : `{ ${name} }`
-        } from "${nodePath.relative(
-          nodePath.dirname(this.path),
-          script.path.replace(/\.ts$/u, ".js")
-        )}";`
-    );
+    return Array.from(this.imports, ([name, { script, isType, isDefault }]) => {
+      const resolvedPath = nodePath.relative(
+        nodePath.dirname(this.path),
+        script.path.replace(/\.ts$/u, ".js")
+      );
+
+      return `import${isType ? " type" : ""} ${
+        isDefault ? name : `{ ${name} }`
+      } from "${resolvedPath.includes("../") ? "" : "./"}${resolvedPath}";`;
+    });
   }
 
   exportStatements() {
